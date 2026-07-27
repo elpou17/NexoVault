@@ -1,7 +1,7 @@
 name: nexovault
 description: Gestor de contraseñas local y seguro para Android.
 publish_to: 'none'
-version: 0.1.0+1
+version: 0.1.4+5
 
 environment:
   sdk: '>=3.6.0 <4.0.0'
@@ -27,8 +27,12 @@ flutter:
 
 flutter_launcher_icons:
   android: "launcher_icon"
-  ios: true
+  ios: false
   image_path: "assets/icons/nexovault_icon.png"
   adaptive_icon_background: "#0B1020"
   adaptive_icon_foreground: "assets/icons/nexovault_icon.png"
   min_sdk_android: 24
+
+# Fijado temporalmente para evitar una incompatibilidad de Gradle en jni 1.0.1.
+dependency_overrides:
+  jni: 1.0.0

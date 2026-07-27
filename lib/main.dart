@@ -65,7 +65,7 @@ class SecureStore {
   }
 
   static String _deriveHash(String password, String salt) {
-    var bytes = utf8.encode('$salt:$password');
+    List<int> bytes = utf8.encode('$salt:$password');
     for (var i = 0; i < 120000; i++) {
       bytes = sha256.convert(bytes).bytes;
     }
@@ -288,7 +288,8 @@ class _LoginScreenState extends State<LoginScreen> {
       }
       final ok = await auth.authenticate(
         localizedReason: 'Desbloquea tu bóveda NexoVault',
-        options: const AuthenticationOptions(biometricOnly: false),
+        biometricOnly: false,
+        persistAcrossBackgrounding: true,
       );
       if (ok && mounted) {
         Navigator.pushReplacement(

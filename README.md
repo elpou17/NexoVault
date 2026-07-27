@@ -1,59 +1,52 @@
-# NexoVault v0.1.0
+# NexoVault v0.1.2
 
-Base móvil Flutter para Android, compatible con Visual Studio Code.
+Proyecto Flutter corregido para Android Embedding V2 y preparado para abrirse en Visual Studio Code.
 
-## Requisitos
+## Primera ejecución en Windows
 
-- Flutter SDK estable
-- Android Studio con Android SDK
-- Visual Studio Code
-- Extensiones Flutter y Dart
-- Un emulador Android o teléfono con depuración USB
+1. Descomprime el proyecto.
+2. Abre esta carpeta en Visual Studio Code.
+3. Inicia un emulador Android.
+4. Ejecuta `reparar_y_ejecutar.bat`.
 
-## Preparar el proyecto
+El script elimina cualquier plataforma Android obsoleta, genera una plataforma moderna usando la versión de Flutter instalada, configura biometría, genera el icono y ejecuta la aplicación.
 
-En PowerShell, dentro de esta carpeta:
+## Preparar Android sin ejecutar
 
 ```powershell
-flutter create --platforms=android,ios .
+.\reparar_y_preparar_android.bat
+```
+
+## Ejecutar manualmente
+
+```powershell
 flutter pub get
-dart run flutter_launcher_icons
+flutter devices
 flutter run
 ```
 
-El primer comando genera las carpetas nativas de Android/iOS que no se incluyen precompiladas en este paquete.
-
-## Ejecutar en Android
+## Crear APK
 
 ```powershell
-flutter devices
-flutter run -d <ID_DEL_DISPOSITIVO>
-```
-
-## Generar APK
-
-```powershell
-flutter build apk --release
+.\compilar_apk_release.bat
 ```
 
 Resultado:
 
 ```text
-build/app/outputs/flutter-apk/app-release.apk
+build\app\outputs\flutter-apk\app-release.apk
 ```
 
-## Generar Android App Bundle
+## Identidad Android
 
-```powershell
-flutter build appbundle --release
-```
+- Application ID: `com.sudotic.nexovault`
+- Min SDK: definido por el proyecto Flutter y el paquete; el icono configura mínimo 24.
+- Android Embedding: V2.
+- MainActivity: `FlutterFragmentActivity`, requerido para autenticación local.
 
-Resultado:
+> Esta es una versión MVP para validación. No debe usarse todavía como bóveda final para secretos críticos hasta completar cifrado de registros, bloqueo automático, protección del portapapeles y pruebas de seguridad.
 
-```text
-build/app/outputs/bundle/release/app-release.aab
-```
 
-## Estado de seguridad
+## Corrección v0.1.3
 
-Esta versión es un prototipo funcional. Usa almacenamiento seguro de plataforma para el MVP. Antes de producción se debe migrar la bóveda a cifrado autenticado por registro, incorporar Argon2id, bloqueo por inactividad, protección contra capturas, exportación cifrada y pruebas OWASP MASVS.
+Se elimina automáticamente el test de plantilla `test/widget_test.dart` que referencia la clase inexistente `MyApp`. La aplicación usa `NexoVaultApp`. También se desactiva la generación de iconos iOS en este paquete Android.
